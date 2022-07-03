@@ -2,16 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <link
+    <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
       integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ=="
       crossorigin="anonymous"
-    /> -->
-    <link rel="stylesheet" href="/style.css" />
-    <title>weather App</title>
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <!-- <link rel="stylesheet" href="/style.css"> -->
+    <title>Weather App</title>
   </head>
   <body>
     <div class="box">
@@ -20,14 +23,19 @@
       <div class="wave -three"></div>
 
       <div id="weathercon">
-        <i class="fa-solid fa-sun-bright"></i>
+        <i class="fas fa-sun" style="color: #eccc68"></i>
       </div>
 
       <div class="info">
-        <h2 class="location"><i class="fa-solid fa-street-view"></i>Pune,IN</h2>
-        <p id="date">date here</p>
-        <h1 class="temp">20.00</h1>
-        <h3 class="tempmin_max">min and max temp</h3>
+        <h2 class="location">
+          <i class="fas fa-street-view" style="color: #fff"></i
+          >{%location%},{%country%}
+        </h2>
+        <p id="date">WED | nov 23 | 10:49AM</p>
+        <h1 class="temp">{%tempval%}&deg; C</h1>
+        <h3 class="tempmin_max">
+          Min {%tempmin%}&deg; C | Max {%tempmax%}&deg; C
+        </h3>
       </div>
     </div>
 
@@ -35,18 +43,32 @@
       const curDate = document.getElementById("date");
       let weathercon = document.getElementById("weathercon");
 
-      const tempStatus = "Clouds";
+      const tempStatus = "{%tempstatus%}";
+
+      if (tempStatus == "Sunny") {
+        weathercon.innerHTML =
+          "<i class='fas  fa-sun' style='color: #eccc68;'></i>";
+      } else if (tempStatus == "Clouds") {
+        weathercon.innerHTML =
+          "<i class='fas  fa-cloud' style='color: #f1f2f6;'></i>";
+      } else if (tempStatus == "Rainy") {
+        weathercon.innerHTML =
+          "<i class='fas  fa-cloud-rain' style='color: #a4b0be;'></i>";
+      } else {
+        weathercon.innerHTML =
+          "<i class='fas  fa-cloud' style='color:#f1f2f6;'></i>";
+      }
 
       const getCurrentDay = () => {
-        var weekday = [
-          "Sun",
-          "Mon",
-          "Tue",
-          "Wed",
-          "Thu",
-          "Fri",
-          "Sat",
-        ];
+        var weekday = new Array(7);
+        weekday[0] = "Sun";
+        weekday[1] = "Mon";
+        weekday[2] = "Tue";
+        weekday[3] = "Wed";
+        weekday[4] = "Thu";
+        weekday[5] = "Fri";
+        weekday[6] = "Sat";
+
         let currentTime = new Date();
         let day = weekday[currentTime.getDay()];
         return day;
@@ -54,22 +76,22 @@
 
       const getCurrentTime = () => {
         var months = [
-          "January",
-          "February",
-          "March",
-          "April",
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
           "May",
-          "June",
-          "July",
-          "August",
-          "September",
-          "October",
-          "November",
-          "December",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
         ];
 
         var now = new Date();
-        var month = months[now.getMonth()];
+        var month = months[now.getMonth() + 1];
         var date = now.getDate();
 
         let hours = now.getHours();
